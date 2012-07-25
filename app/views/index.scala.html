@@ -1,0 +1,93 @@
+@(databases: List[Database])
+
+@main("Home") {
+    
+ 	@if(databases.isEmpty()) {
+ 		<div class="ui-widget">
+			<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+				<p>
+					<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+					<strong>Alerte:</strong> Pas de base de donn&eacute;es.
+				</p>
+			</div>
+		</div>
+	} else {
+		<div id="tabs">
+			<ul>
+				@for(i <- databases.indices) {
+				<li>
+					<a href="#tabs-@i">@databases(i).name</a>
+				</li>
+				}
+			</ul>
+			@for(i <- databases.indices) {
+				<div id="tabs-@i">
+					<p>
+						<span class="label">Nom de la base :</span> @databases(i).name
+					</p>
+					<p>
+						<span class="label">User :</span> @databases(i).user
+					</p>
+					<p>
+						<span class="label">Password :</span> @databases(i).password
+					</p>
+					<p>
+						<span class="label">Url :</span> @databases(i).url
+					</p>
+				</div>
+			}
+		</div>
+		<div style="margin-top: 5px" >
+			<table id="analyses">
+				<thead>
+					<tr>
+						<td class="label">Base de r&eacute;f&eacute;rence</td>
+						<td class="label">Base &agrave; comparer</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="noAnalyse">
+						<td colspan="2">Pas d'analyse</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div style="margin-top: 5px">
+			<span class="label">&nbsp;Base de reference :</span>
+			<select id="combobox-ref">
+				<option value="">Select one...</option>
+				@for(database <- databases) {
+					<option value="@database.id">@database.name</option>
+				}
+			</select>
+		</div>
+		<div style="margin-top: 5px">
+			<span class="label">&nbsp;Base &agrave; comparer :&nbsp;</span>
+			<select id="combobox-bdd">
+				<option value="">Select one...</option>
+				@for(database <- databases) {
+					<option value="@database.id">@database.name</option>
+				}
+			</select>
+		</div>
+		<a href="#" id="mybutton">Lancer</a>
+	}
+}
+
+<script>
+	$(function() {
+		$( "#tabs" ).tabs({
+			collapsible: true
+		});
+		$( "#combobox-ref" ).combobox();
+		$( "#combobox-bdd" ).combobox();
+		$( "#mybutton" ).button();
+		
+		$("#mybutton").click(function() {
+			$.post('/lancerAnalyse/' + $( "#combobox-ref" ).val() + '&' + $( "#combobox-bdd" ).val(), function(data) {
+				$("#noAnalyse").remove();
+				$("#analyses").append('<tr><td>' + $( "#combobox-ref" ).val() + '</td><td>' + $( "#combobox-bdd" ).val() + '</td></tr>');
+			});
+		});
+	});
+</script>

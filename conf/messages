@@ -1,0 +1,10 @@
+# You can specialize this file for each language.
+# For example, for French create a messages.fr file
+#
+
+
+name=Nom
+user=Login
+password=Mot de passe
+url=URL
+required=Obligatoire
