@@ -20,7 +20,7 @@ public class Global extends GlobalSettings {
 			// chargement des donneees
 			Map<String,List<Object>> all = (Map<String,List<Object>>) Yaml.load("initial-data.yml");
 			
-			// Insertion des donnees dans la base
+      // Insertion des donnees dans la base
       Ebean.save(all.get("databases"));
 			
 		} else {
