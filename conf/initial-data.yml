@@ -1,0 +1,14 @@
+# Play framework 2.0 Java - Defining model error and initial-data.yml
+
+databases:
+
+  - !!models.Database {id: 1, name: DEV1, password: 1lbpe856, url: 'jdbc:oracle:thin:@10.3.20.72:1521:DEV1', user: teseapp}
+  - !!models.Database {id: 2, name: DEV2, password: 1lbpe856, url: 'jdbc:oracle:thin:@10.3.20.72:1521:DEV2', user: teseapp}
+  - !!models.Database {id: 3, name: DEV3, password: 1lbpe856, url: 'jdbc:oracle:thin:@10.3.20.72:1521:DEV3', user: teseapp}
+  - !!models.Database {id: 4, name: DEV4, password: 1lbpe856, url: 'jdbc:oracle:thin:@10.3.20.72:1521:DEV4', user: teseapp}
+  - !!models.Database {id: 5, name: TEST1, password: 1lbpe856, url: 'jdbc:oracle:thin:@10.3.20.72:1521:TEST1', user: teseapp}
+  - !!models.Database {id: 6, name: TEST2, password: 1lbpe856, url: 'jdbc:oracle:thin:@10.3.20.72:1521:TEST2', user: teseapp}
+  - !!models.Database {id: 7, name: TEST3, password: 1lbpe856, url: 'jdbc:oracle:thin:@10.3.20.72:1521:TEST3', user: teseapp}
+  - !!models.Database {id: 8, name: APPINTG, password: 1lbpe856, url: 'jdbc:oracle:thin:@10.3.20.72:1521:APPINTG', user: teseapp}
+  - !!models.Database {id: 9, name: REFTEE, password: 1lbpe856, url: 'jdbc:oracle:thin:@10.7.87.40:1521:REFTEE', user: teseapp}
+  - !!models.Database {id: 10, name: REFCEA, password: 1lbpe856, url: 'jdbc:oracle:thin:@10.7.87.40:1521:REFCEA', user: teseapp}
