@@ -86,7 +86,7 @@
 		$("#mybutton").click(function() {
 			$.post('/lancerAnalyse/' + $( "#combobox-ref" ).val() + '&' + $( "#combobox-bdd" ).val(), function(data) {
 				$("#noAnalyse").remove();
-				$("#analyses").append('<tr><td>' + $( "#combobox-ref" ).val() + '</td><td>' + $( "#combobox-bdd" ).val() + '</td></tr>');
+				$("#analyses").append('<tr><td>' + $( "#combobox-ref option:selected" ).text() + '</td><td>' + $( "#combobox-bdd option:selected" ).text() + '</td></tr>');
 			});
 		});
 	});
