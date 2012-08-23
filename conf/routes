@@ -5,6 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index()
 POST    /lancerAnalyse/:id&:id2          controllers.Application.lancerAnalyse(id:Long,id2:Long)
+GET		/analyses					controllers.Application.getListeAnalyses(sidx: String ?= "id",sord: String ?= "asc")
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

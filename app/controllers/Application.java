@@ -1,6 +1,14 @@
 package controllers;
 
+import java.util.List;
+
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.node.ObjectNode;
+
+import com.avaje.ebean.OrderBy;
+
 import play.*;
+import play.libs.Json;
 import play.mvc.*;
 
 import views.html.*;
@@ -21,5 +29,24 @@ public class Application extends Controller {
 		Analyse analyse = new Analyse(ref, toCompare);
 		analyse.save();
 		return ok("ok");
+	}
+	
+	public static Result getListeAnalyses(String sidx, String sord) {
+		// gestion du tri
+		OrderBy<Analyse> order = new OrderBy<Analyse>();
+		if ("asc".equals(sord)) {
+			order.asc(sidx);
+		} else {
+			order.desc(sidx);
+		}
+		List<Analyse> liste = Analyse.find.setOrder(order).findList();
+		
+		// Converti la liste en JSON
+		JsonNode noeudAna = Json.toJson(liste);
+		// TODO : voir comment ajouter le noeud root (analyses)
+		String jsonString = "{  \"analyses\": " + noeudAna.toString() + " }";  
+		JsonNode noeud = Json.parse(jsonString);
+		
+		return ok(noeud);
 	}
 }

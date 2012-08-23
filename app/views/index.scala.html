@@ -38,19 +38,8 @@
 			}
 		</div>
 		<div style="margin-top: 5px" >
-			<table id="analyses">
-				<thead>
-					<tr>
-						<td class="label">Base de r&eacute;f&eacute;rence</td>
-						<td class="label">Base &agrave; comparer</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr id="noAnalyse">
-						<td colspan="2">Pas d'analyse</td>
-					</tr>
-				</tbody>
-			</table>
+			<table id="analyses"></table>
+			<div id="paginAnalyses"></div>
 		</div>
 		<div style="margin-top: 5px">
 			<span class="label">&nbsp;Base de reference :</span>
@@ -83,10 +72,36 @@
 		$( "#combobox-bdd" ).combobox();
 		$( "#mybutton" ).button();
 		
+		$("#analyses").jqGrid({
+		   	url:'/analyses',
+			datatype: "json",
+			jsonReader: {
+		    	repeatitems: false,
+		    	root: 'analyses',
+		        id: 'id',
+				page:  function(obj) { return 1; },
+				total: function(obj) { return 1; },
+				records: function(obj) { return obj.analyses.length; },
+				userdata: "userData"
+		    },
+		   	colNames:['Identifiant', 'Base de r&eacute;f&eacute;rence', 'Base &agrave; comparer'],
+		   	colModel:[
+		   		{name:'id',index:'id', width:200},
+		   		{name:'databaseRef.name',index:'databaseRef.name', width:300},
+		   		{name:'databaseAComparer.name',index:'databaseAComparer.name', width:300}
+		   	],
+		   	pager: '#paginAnalyses',
+		   	sortname: 'id',
+		    viewrecords: true,
+		    sortorder: "asc",
+		    caption:"Liste des analyses"
+		});
+		$("#analyses").jqGrid('navGrid','#paginAnalyses',{edit:false,add:false,del:false,search: false,refresh:false});
+		
+		
 		$("#mybutton").click(function() {
 			$.post('/lancerAnalyse/' + $( "#combobox-ref" ).val() + '&' + $( "#combobox-bdd" ).val(), function(data) {
-				$("#noAnalyse").remove();
-				$("#analyses").append('<tr><td>' + $( "#combobox-ref option:selected" ).text() + '</td><td>' + $( "#combobox-bdd option:selected" ).text() + '</td></tr>');
+				$("#analyses").trigger("reloadGrid")
 			});
 		});
 	});

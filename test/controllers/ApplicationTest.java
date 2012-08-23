@@ -46,4 +46,20 @@ public class ApplicationTest {
       }
     });
   }
+  
+  @Test
+  public void callGetListeAnalyses() {
+    running(fakeApplication(inMemoryDatabase()), new Runnable() {
+      public void run() {
+        
+        assertThat(Ebean.find(Analyse.class).findRowCount()).isEqualTo(0);
+        
+        Result result = callAction(controllers.routes.ref.Application.getListeAnalyses("id", "asc"));   
+        assertThat(status(result)).isEqualTo(OK);
+        assertThat(contentType(result)).isEqualTo("application/json");
+        assertThat(charset(result)).isEqualTo("utf-8");
+        assertThat(contentAsString(result)).contains("analyses");
+      }
+    });
+  }
 }
