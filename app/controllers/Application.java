@@ -41,12 +41,13 @@ public class Application extends Controller {
 		}
 		List<Analyse> liste = Analyse.find.setOrder(order).findList();
 		
-		// Converti la liste en JSON
-		JsonNode noeudAna = Json.toJson(liste);
-		// TODO : voir comment ajouter le noeud root (analyses)
-		String jsonString = "{  \"analyses\": " + noeudAna.toString() + " }";  
-		JsonNode noeud = Json.parse(jsonString);
+		// ajout de la liste au dto
+		AnalysesDto dto = new AnalysesDto();
+		dto.setAnalyses(liste);
 		
-		return ok(noeud);
+		// Converti le dto en JSON
+		JsonNode noeud = Json.toJson(dto);
+		
+		return ok(noeud.toString());
 	}
 }
